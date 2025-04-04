@@ -50,12 +50,14 @@
        h2, p{
              letter-spacing: 0.16rem; 
             background-color: black;
+            padding: 1rem;
+            outline: 2px solid #ffffff;
         }
 
         h2{ font-weight: 900; }
 
         p{
-            max-width: 55ch;
+            max-width: 45ch;
             font-weight: 700;
             overflow-wrap: break-word;
         }
@@ -67,6 +69,8 @@
             height: max-content;
             background: none;
             outline: 0.3rem solid black;
+
+            img{ object-fit: cover; }
         }
 
         button.clicked{ outline-color: blue; }
@@ -123,23 +127,23 @@
 
     <nav>
         
-        <button onclick="characterChange('codebreaker', 0)" onkeydown=" (e) => { if(e.key == 'Enter') characterChange('codebreaker', 0)}">
+        <button>
             <img src="./imagens/icone-codebreaker.png" alt="Codebreaker's tambnail">
         </button>
         
-        <button onclick="characterChange('codepixie', 1)" onkeydown=" (e) => { if(e.key == 'Enter') characterChange('codepixie', 1)}">
+        <button>
             <img src="./imagens/icone-codepixie.png" alt="Codepixie's tambnail">
         </button>
         
-        <button onclick="characterChange('cyberstorm', 2)" onkeydown=" (e) => { if(e.key == 'Enter') characterChange('cyberstorm', 2)}">
+        <button>
             <img src="./imagens/icone-cyberstorm.png" alt="Cyberstorm's tambnail">
         </button>
         
-        <button onclick="characterChange('hexblade', 3)" onkeydown=" (e) => { if(e.key == 'Enter') characterChange('hexblade', 3)}">
+        <button>
             <img src="./imagens/icone-hexblade.png" alt="Hexblade's tambnail">
         </button>
         
-        <button onclick="characterChange('neonpulse', 4)" onkeydown=" (e) => { if(e.key == 'Enter') characterChange('neonpulse', 4)}">
+        <button>
             <img src="./imagens/icone-neonpulse.png" alt="Neonpulse's tambnail">
         </button>
         
@@ -159,7 +163,9 @@ const characterParagraph = Section.querySelector("p");
 
 const buttons = Array.from(Section.querySelectorAll("nav button"));
 
-const characters = [
+const characterNames = ["codebreaker", "codepixie", "cyberstorm", "hexblade", "neonpulse"]
+
+const charactersInfo = [
 
     codebreaker = `
                     No coração de uma estação espacial abandonada, Orion Vex, um ex-engenheiro
@@ -194,11 +200,11 @@ neonpulse = `
 
 ]
 
-function characterChange(name, index) {
+function characterChange(name, info) {
 
   characterTitle.textContent = name.charAt(0).toUpperCase() + name.slice(1);
 
-  characterParagraph.textContent = characters[index];
+  characterParagraph.textContent = info;
 
   Section.style.backgroundImage=`url("./imagens/bg-${name}.png")`;
     
@@ -214,15 +220,38 @@ buttons.forEach(Button => { Button.classList.remove("clicked"); });
 
 document.addEventListener("DOMContentLoaded", () => {
 
-characterChange("Codebreaker", 0);
+characterChange(characterNames[0], charactersInfo[0]);
 
 buttonManeger(buttons[0]);
 
 });
 
-  buttons.forEach(Button => { Button.addEventListener("click", () => buttonManeger(Button))});
+buttons.forEach((Button, index) => {
 
-buttons.forEach(Button => { Button.addEventListener("keydown", (e) => { if(e.key == "Enter") buttonManeger(Button); })});
+
+Button.addEventListener("click", () => {
+
+        characterChange(characterNames[index], charactersInfo[index]);
+        
+        buttonManeger(Button);
+
+});
+
+
+Button.addEventListener("keydown", (e) => {
+    
+    if(e.key == "Enter"){
+        
+        characterChange(characterNames[index], charactersInfo[index]); 
+        
+        buttonManeger(Button);
+
+    }
+    
+    });
+    
+    
+});
 
 </script>
     
